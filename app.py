@@ -19,11 +19,13 @@ Esta aplicación permite analizar cómo cambian las probabilidades predichas de 
 La predicción utiliza el modelo **TabPFN Ajustado** obtenido del análisis del Hito 1.
 """)
 
-# Cargar Token si es requerido por el entorno de TabPFN
-token_env = os.environ.get("TABPFN_TOKEN")
-if not token_env:
-    st.warning("⚠️ TABPFN_TOKEN no detectado en las variables de entorno locales. Si experimenta problemas de ejecución, configure la variable de entorno correspondiente.")
-
+# Cargar token de TabPFN desde Streamlit Secrets
+if "TABPFN_TOKEN" in st.secrets:
+    os.environ["TABPFN_TOKEN"] = st.secrets["TABPFN_TOKEN"]
+elif "TABPFN_TOKEN" not in os.environ:
+    st.error("⚠️ TABPFN_TOKEN no configurado.")
+    st.stop()
+    
 # Carga de recursos con manejo de errores
 from tabpfn import TabPFNClassifier
 from sklearn.pipeline import Pipeline
@@ -49,8 +51,10 @@ def cargar_artefactos():
                 n_estimators=4,
                 balance_probabilities=False,
                 random_state=2026,
-                device="cpu"
+                device="cpu",
+                ignore_pretraining_limits=True
             ))
+          
         ])
 
         # Ajustar usando los mismos datos de entrenamiento
