@@ -1,6 +1,7 @@
 streamlit
-joblib
 pandas
 numpy
+joblib
 matplotlib
 scikit-learn
+tabpfn-client
