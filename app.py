@@ -27,7 +27,7 @@ elif "TABPFN_TOKEN" not in os.environ:
     st.stop()
     
 # Carga de recursos con manejo de errores
-from tabpfn import TabPFNClassifier
+from tabpfn_client import TabPFNClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 
