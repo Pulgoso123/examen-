@@ -50,11 +50,8 @@ def cargar_artefactos():
             ("modelo", TabPFNClassifier(
                 n_estimators=4,
                 balance_probabilities=False,
-                random_state=2026,
-                device="cpu",
-                ignore_pretraining_limits=True
+                random_state=2026
             ))
-          
         ])
 
         # Ajustar usando los mismos datos de entrenamiento
