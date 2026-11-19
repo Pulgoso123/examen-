@@ -698,7 +698,7 @@ st.info("""
 📌 **Uso académico**
 
 Esta aplicación corresponde a una herramienta de apoyo a la
-clasificación y priorización dentro del proyecto de Machine Learning.
+clasificación y priorización.
 
 El simulador permite analizar escenarios What-If y observar
 directamente cómo cambian las probabilidades entregadas por TabPFN.
