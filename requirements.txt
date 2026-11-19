@@ -3,5 +3,6 @@ joblib
 pandas
 numpy
 matplotlib
+scikit-learn
 tabpfn
 torch
