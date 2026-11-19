@@ -25,15 +25,47 @@ if not token_env:
     st.warning("⚠️ TABPFN_TOKEN no detectado en las variables de entorno locales. Si experimenta problemas de ejecución, configure la variable de entorno correspondiente.")
 
 # Carga de recursos con manejo de errores
+from tabpfn import TabPFNClassifier
+from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
+
+
 @st.cache_resource
 def cargar_artefactos():
+
     try:
-        modelo = joblib.load("mejor_modelo.joblib")
+
+        # Cargar datos de entrenamiento
+        X_train = joblib.load("X_train.joblib")
+        y_train = joblib.load("y_train.joblib")
+
+        # Cargar estadísticas utilizadas por el simulador
         stats = joblib.load("stats_train.joblib")
+
+        # Reconstruir el modelo TabPFN ajustado
+        modelo = Pipeline(steps=[
+            ("imputador", SimpleImputer(strategy="median")),
+            ("modelo", TabPFNClassifier(
+                n_estimators=4,
+                balance_probabilities=False,
+                random_state=2026,
+                device="cpu"
+            ))
+        ])
+
+        # Ajustar usando los mismos datos de entrenamiento
+        modelo.fit(X_train, y_train)
+
         return modelo, stats
+
     except Exception as e:
-        st.error(f"Error al cargar los artefactos exportados ('mejor_modelo.joblib' o 'stats_train.joblib'): {e}")
+
+        st.error(
+            f"Error al cargar o construir el modelo: {e}"
+        )
+
         return None, None
+
 
 modelo, stats = cargar_artefactos()
 
