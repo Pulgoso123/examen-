@@ -22,8 +22,8 @@ La predicción utiliza el modelo **TabPFN Ajustado** obtenido del análisis del 
 # Cargar token de TabPFN desde Streamlit Secrets
 if "TABPFN_TOKEN" in st.secrets:
     os.environ["TABPFN_TOKEN"] = st.secrets["TABPFN_TOKEN"]
-elif "TABPFN_TOKEN" not in os.environ:
-    st.error("⚠️ TABPFN_TOKEN no configurado.")
+else:
+    st.error("TABPFN_TOKEN no configurado.")
     st.stop()
     
 # Carga de recursos con manejo de errores
